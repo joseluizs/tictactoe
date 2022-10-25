@@ -1,9 +1,13 @@
 package br.com.joseluiz.tictactoe;
 
+import br.com.joseluiz.tictactoe.core.Game;
+
 public class Main {
 
 	public static void main(String[] args) {
-		System.out.println("Jogo da velha!");
+
+		Game g = new Game();
+		g.play();
 
 	}
 
