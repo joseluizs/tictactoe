@@ -21,7 +21,14 @@ public class Game {
 		Player winner = null;
 		while (!gameEnded) {
 			board.print();
-			boolean sequenceFound = currentPlayer.play();
+			boolean sequenceFound;
+			
+			try {
+				sequenceFound = currentPlayer.play();
+			} catch (InvalidMoveException e) {
+				UI.printText("ERRO: " + e.getMessage());
+				continue;
+			}
 			if (sequenceFound) {
 				gameEnded = true;
 				winner = currentPlayer;
