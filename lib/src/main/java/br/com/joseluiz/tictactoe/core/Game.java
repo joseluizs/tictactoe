@@ -1,5 +1,7 @@
 package br.com.joseluiz.tictactoe.core;
 
+import java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy;
+
 import br.com.joseluiz.tictactoe.Constants;
 import br.com.joseluiz.tictactoe.ui.UI;
 
@@ -7,6 +9,7 @@ public class Game {
 	
 	private Board board =  new Board();
 	private Player[] players = new Player[Constants.SYMBOL_PLAYERS.length];
+	private int currentPlayerIndex = 0;
 	
 	public void play() {
 		UI.printGameTitle();
@@ -17,13 +20,24 @@ public class Game {
 	}
 	
 	private Player createPlayer(int index) {
-		String name = UI.readInput("Jogador " + (index + 1) + "=> ");
+		String name = UI.readInput("Jogador " + (index + 1) + " => ");
 		char symbol = Constants.SYMBOL_PLAYERS[index];
 		Player player = new Player(name, board, symbol);
 		
 		UI.printText("O jogador '" + name + "' vai usar o símbolo '" + symbol + "'");
 		return player;
 		
+	}
+	
+	private Player nextPlayer() {
+		/*
+		 * currentPlayerIndex++;
+		 * 
+		 * if(currentPlayerIndex >= players.length) { currentPlayerIndex = 0; } return
+		 * 
+		 */
+		currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+		return players[currentPlayerIndex];
 	}
 
 }
