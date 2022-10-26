@@ -1,6 +1,7 @@
 package br.com.joseluiz.tictactoe.core;
 
 import br.com.joseluiz.tictactoe.Constants;
+import br.com.joseluiz.tictactoe.score.ScoreManager;
 import br.com.joseluiz.tictactoe.ui.UI;
 
 public class Game {
@@ -8,8 +9,11 @@ public class Game {
 	private Board board =  new Board();
 	private Player[] players = new Player[Constants.SYMBOL_PLAYERS.length];
 	private int currentPlayerIndex = -1;
+	private ScoreManager scoreManager;
 	
 	public void play() {
+		scoreManager = createScoreManager();
+		
 		UI.printGameTitle();
 		
 		for (int i = 0; i < players.length; i++) {
@@ -44,6 +48,7 @@ public class Game {
 		}
 		else {
 			UI.printText("O jogador '" + winner.getName() + "' venceu o jogo!");
+			scoreManager.saveScore(winner);
 		}
 		
 		board.print();
@@ -54,6 +59,11 @@ public class Game {
 		String name = UI.readInput("Jogador " + (index + 1) + " => ");
 		char symbol = Constants.SYMBOL_PLAYERS[index];
 		Player player = new Player(name, board, symbol);
+		
+		Integer score = scoreManager.getScore(player);
+		if (score != null) {
+			UI.printText("O jogador '" + player.getName() + "' já possui " + score + " votória(s)!");
+		}
 		
 		UI.printText("O jogador '" + name + "' vai usar o símbolo '" + symbol + "'");
 		return player;
@@ -69,6 +79,11 @@ public class Game {
 		 */
 		currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
 		return players[currentPlayerIndex];
+	}
+	
+	private ScoreManager createScoreManager() {
+		//TODO Retornar tipo correto
+		return null;
 	}
 
 }
