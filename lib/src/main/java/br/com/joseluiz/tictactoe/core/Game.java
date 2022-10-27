@@ -1,6 +1,9 @@
 package br.com.joseluiz.tictactoe.core;
 
+import java.io.IOException;
+
 import br.com.joseluiz.tictactoe.Constants;
+import br.com.joseluiz.tictactoe.score.FileScoreManager;
 import br.com.joseluiz.tictactoe.score.ScoreManager;
 import br.com.joseluiz.tictactoe.ui.UI;
 
@@ -11,7 +14,7 @@ public class Game {
 	private int currentPlayerIndex = -1;
 	private ScoreManager scoreManager;
 	
-	public void play() {
+	public void play() throws IOException {
 		scoreManager = createScoreManager();
 		
 		UI.printGameTitle();
@@ -81,9 +84,8 @@ public class Game {
 		return players[currentPlayerIndex];
 	}
 	
-	private ScoreManager createScoreManager() {
-		//TODO Retornar tipo correto
-		return null;
+	private ScoreManager createScoreManager() throws IOException {
+		return new FileScoreManager();
 	}
 
 }
